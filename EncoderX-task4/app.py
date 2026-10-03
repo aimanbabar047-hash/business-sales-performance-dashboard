@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from pathlib import Path
 
 # ==================================================
 # PAGE CONFIGURATION
@@ -29,7 +30,14 @@ st.markdown(
 # LOAD DATA
 # ==================================================
 
-df = pd.read_excel("Sample - Superstore.xls")
+# Get the folder where app.py is located
+BASE_DIR = Path(__file__).resolve().parent
+
+# Build the correct path to the Excel file
+DATA_PATH = BASE_DIR / "Sample - Superstore.xls"
+
+# Load dataset
+df = pd.read_excel(DATA_PATH)
 
 # Convert dates
 df["Order Date"] = pd.to_datetime(df["Order Date"])
@@ -161,42 +169,36 @@ st.subheader("📊 Key Performance Indicators")
 col1, col2, col3, col4, col5, col6 = st.columns(6)
 
 with col1:
-
     st.metric(
         "💰 Total Sales",
         f"${total_sales:,.0f}"
     )
 
 with col2:
-
     st.metric(
         "📈 Total Profit",
         f"${total_profit:,.0f}"
     )
 
 with col3:
-
     st.metric(
         "🛒 Total Orders",
         f"{total_orders:,}"
     )
 
 with col4:
-
     st.metric(
         "👥 Total Customers",
         f"{total_customers:,}"
     )
 
 with col5:
-
     st.metric(
         "📊 Profit Margin",
         f"{profit_margin:.2f}%"
     )
 
 with col6:
-
     st.metric(
         "💵 Average Order Value",
         f"${average_order_value:,.2f}"
